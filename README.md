@@ -44,7 +44,7 @@ For each experiment run, the plots and files are saved in a folder specified by 
 
 ### Command Line Interface
 
-Command Line Interface for pyLFDA. Download `pyLFDA_cli.py`[(click here to download)](https://github.com/RayLabIIITD/pyLFDA/releases/download/v_1/pyLFDA_cli.py) from the releases and follow the instructions from below. 
+Command Line Interface for pyLFDA. Download `pyLFDA_cli.py`[(download)](https://github.com/RayLabIIITD/pyLFDA/releases/download/v_1/pyLFDA_cli.py) from the releases and follow the instructions from below. 
 
 ```
 usage: pyLFDA_cli.py [-h] -v Version [-exp Experiment Name] -trr TRR Filename
@@ -97,10 +97,11 @@ optional arguments:
 
 ### Graphical User Interface
 
+The GUI offers the same functionality with the ease of a graphical interface. To download, either clone the repository and run [pyLFDA.exe](https://github.com/RayLabIIITD/pyLFDA/blob/main/pyLFDA/pyLFDA.exe) or [click here](https://github.com/RayLabIIITD/pyLFDA/releases/download/v_1/pyLFDA.exe).
 <p align="center">
   <img src="https://github.com/RayLabIIITD/pyLFDA/blob/main/pyLFDA/images/gui_example.png?raw=true" alt="pyLFDA Graphical Interface"/>
 </p>
 
 ### Python Package
 
-Detailed documentation and usage instructions for pyLFDA can be found in this [example](https://github.com/RayLabIIITD/pyLFDA/blob/main/pyLFDA/example.ipynb)
+Detailed documentation and usage instructions for pyLFDA can be found in this [example](https://github.com/RayLabIIITD/pyLFDA/blob/main/pyLFDA/example.ipynb).
