@@ -12,7 +12,7 @@ pyLFDA has 3 different interfaces - GUI, CLI and Python package, each providing 
 This project works with Python on versions 3.5+, and on Linux, OSX and the Windows operating systems. To install:
 
 ```
-pip install nmslib
+pip install pyLFDA
 ```
 
 Other requirements - 
