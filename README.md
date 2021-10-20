@@ -44,7 +44,7 @@ For each experiment run, the plots and files are saved in a folder specified by 
 
 ### Command Line Interface
 
-Command Line Interface for pyLFDA
+Command Line Interface for pyLFDA. Download `pyLFDA_cli.py`[(click here to download)](https://github.com/RayLabIIITD/pyLFDA/releases/download/v_1/pyLFDA_cli.py) from the releases and follow the instructions from below. 
 
 ```
 usage: pyLFDA_cli.py [-h] -v Version [-exp Experiment Name] -trr TRR Filename
