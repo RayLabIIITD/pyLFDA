@@ -303,8 +303,6 @@ class LFDA():
                     self.summed_pfa_filename_framewise = os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/pfa_framewise_"+self.timestamp+".pfa")))
                 else:
                     self.summed_pfa_filename_framewise = os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/"+file_name)))
-                if os.path.exists(self.summed_pfa_filename_framewise):
-                    raise ValueError("File already exists")
 
                 print("Parsing PFA file as framewise")
                 create_summed_pfa(pfa_filename=self.pfa_filename, 
@@ -452,8 +450,8 @@ class LFDA():
         else:
             num_y_bins = int(num_y_bins)
         try:
-            angle =  gangle(self.trr_filename, self.tpr_filename, self.ndx_filename, self.group1, self.group2, filename=os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/angle.xvg"))))
             if not specific_frame and not window:
+                angle = gangle(self.trr_filename, self.tpr_filename, self.ndx_filename, self.group1, self.group2, filename=os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/angle.xvg"))), mode="average")
                 print("Creating curvature plot")
                 plot_curvature( universe=self.mda_universe, 
                                 atom_dict=self.atom_dict if self.atom_dict!=None else self.atom_dict_framewise,
@@ -468,6 +466,7 @@ class LFDA():
                     raise ValueError("Force property of atoms are not calculated yet, please run make_summed_pfa() function before running this function")
                 else:
                     print(f"Creating {specific_frame} specific frame curvature plot")
+                    angle = gangle(self.trr_filename, self.tpr_filename, self.ndx_filename, self.group1, self.group2, filename=os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/angle.xvg"))), mode="framewise")
                     plot_curvature_framewise(   universe=self.mda_universe, 
                                                 atom_dict=self.atom_dict_framewise, 
                                                 selection = selection,
@@ -482,6 +481,7 @@ class LFDA():
                     raise ValueError("Force property of atoms are not calculated yet, please run make_summed_pfa() function before running this function")
                 else:
                     print(f"Creating {window} window size curvature plots")
+                    angle = gangle(self.trr_filename, self.tpr_filename, self.ndx_filename, self.group1, self.group2, filename=os.path.abspath(os.path.expanduser(os.path.expandvars(self.experiment_name+"/angle.xvg"))), mode="window")
                     plot_curvature_window(  universe=self.mda_universe, 
                                             atom_dict=self.atom_dict_framewise, 
                                             window_size = window, 
@@ -516,7 +516,7 @@ class LFDA():
 
     def msd(self, select='all', msd_type='xyz', fft=True, timestep=1, start_index=None, end_index=None):
         '''
-        Function to plot MSD values for all frames and calculate the diffusion coefficient
+        Function to plot MSD values for all frames and calculates the diffusion coefficient
         Arguments :
             -   select : MDUniverse Atom selection
             -   msd_type : MSD Type
@@ -1340,7 +1340,7 @@ def plot_curvature_framewise(universe, atom_dict, specific_frame=None, selection
                     ax[2][lipid].set_title(f"Force Z {allKeys[lipid]}", fontdict={'fontsize':5}, pad=2)
                 ax[2][2].remove()
                 if gangle != None:
-                    plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle}", ha="center", fontdict={'fontsize':7})
+                    plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle[specific_frame]}", ha="center", fontdict={'fontsize':7})
                 fig.suptitle(f'Curvature Plots for Atom {selected_atoms[i]} - Frame {frame}', fontsize=12)
                 plt.savefig(f'{plot_name}_{num_x_bins}_{num_y_bins}_{selected_atoms[i]}_{frame}.png', dpi = 1000)
                 plt.close()
@@ -1381,7 +1381,7 @@ def plot_curvature_framewise(universe, atom_dict, specific_frame=None, selection
                         #cbar.set_label(f"Force Z {allKeys[i]}", fontsize=5, labelpad=2)
                     ax[2][2].remove()
                     if gangle != None:
-                        plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle}", ha="center", fontdict={'fontsize':7})
+                        plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle[specific_frame]}", ha="center", fontdict={'fontsize':7})
                     fig.suptitle(f'Curvature Plots for Atom {selected_atoms[i]} {position} Membrane - Frame {frame}', fontsize=12)
                     plt.savefig(f'{plot_name}_{num_x_bins}_{num_y_bins}_{selected_atoms[i]}_{position}_{frame}.png', dpi = 1000)
                     plt.close()
@@ -1537,7 +1537,7 @@ def plot_curvature_window(universe, atom_dict, window_size = 10, num_x_bins = 10
                     ax[2][lipid].set_title(f"Force Z {allKeys[lipid]}", fontdict={'fontsize':5}, pad=2)
                 ax[2][2].remove()
                 if gangle != None:
-                    plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle}", ha="center", fontdict={'fontsize':7})
+                    plt.figtext(0.85, 0.2, f"Average Angle - \n {mean(gangle[window:window+window_size])}", ha="center", fontdict={'fontsize':7})
                 fig.suptitle(f'Curvature Plots for Atom {selected_atoms[i]} - Window {window}-{window+window_size}', fontsize=12)
                 plt.savefig(f'{plot_name}_{num_x_bins}_{num_y_bins}_{selected_atoms[i]}_window_{window}_{window+window_size}.png', dpi = 1000)
                 plt.close()
@@ -1578,7 +1578,7 @@ def plot_curvature_window(universe, atom_dict, window_size = 10, num_x_bins = 10
                         #cbar.set_label(f"Force Z {allKeys[i]}", fontsize=5, labelpad=2)
                     ax[2][2].remove()
                     if gangle != None:
-                        plt.figtext(0.85, 0.2, f"Average Angle - \n {gangle}", ha="center", fontdict={'fontsize':7})
+                        plt.figtext(0.85, 0.2, f"Average Angle - \n {mean(gangle[window:window+window_size])}", ha="center", fontdict={'fontsize':7})
                     fig.suptitle(f'Curvature Plots for Atom {selected_atoms[i]} {position} Membrane - Window {window}-{window+window_size}', fontsize=12)
                     plt.savefig(f'{plot_name}_{num_x_bins}_{num_y_bins}_{selected_atoms[i]}_{position}_window_{window}_{window+window_size}.png', dpi = 1000)
                     plt.close()
@@ -1620,14 +1620,11 @@ def plot_msd(universe, select='all', msd_type='xyz', fft=True, timestep=1, start
         sys.exit(0)
     return
 
-def gangle(trr_filename, tpr_filename, ndx_filename, group1, group2, g1="vector", g2="vector", seltype="res_com", selrpos="res_com", filename="angle.xvg", type="single"):
+def gangle(trr_filename, tpr_filename, ndx_filename, group1, group2, g1="vector", g2="vector", seltype="res_com", selrpos="res_com", filename="angle.xvg", mode="average"):
     try:    
         if g1=="vector" and g2=="vector":
-            subprocess.run(["gmx", "gangle", "-f", trr_filename, "-s", tpr_filename, "-n", ndx_filename, "-g1", g1, "-g2", g2, "-group1", group1, "-group2", group2, "-seltype", seltype, "-selrpos", selrpos, "-oav", filename],
-                            stdout=subprocess.DEVNULL,
-                            stderr=subprocess.STDOUT)
-            
-            if type=="single":
+            subprocess.run(["gmx", "gangle", "-f", trr_filename, "-s", tpr_filename, "-n", ndx_filename, "-g1", g1, "-g2", g2, "-group1", group1, "-group2", group2, "-seltype", seltype, "-selrpos", selrpos, "-oav", filename], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+            if mode=="average":
                 angle = 0
                 frame = 0
                 with open(filename, "r") as f:
@@ -1637,8 +1634,7 @@ def gangle(trr_filename, tpr_filename, ndx_filename, group1, group2, g1="vector"
                             frame+=1
                 subprocess.run(["rm", filename])
                 return (angle/frame)
-
-            elif type=="framewise":
+            elif mode=="framewise" or mode=="window":
                 angle = []
                 with open(filename, "r") as f:
                     for line in f:
@@ -1646,11 +1642,6 @@ def gangle(trr_filename, tpr_filename, ndx_filename, group1, group2, g1="vector"
                             angle.append(float(line.split()[1]))
                 subprocess.run(["rm", filename])
                 return angle
-
-            else:
-                raise ValueError("Please select valid type parameter")
-
-            return
     except:
             print(traceback.format_exc())
             sys.exit(0)
@@ -2010,6 +2001,9 @@ def create_graph_2(atom_dict, graph_filename = "", MEMBRANE_PARTITION_THRESHOLD_
     num_partitions = math.ceil(MEMBRANE_PARTITION_THRESHOLD_FRACTION * len(all_atoms_membrane_non_zero_force))
     num_partitions_x = math.ceil((abs(x_max) - abs(x_min)))*10 
     num_partitions_y = math.ceil((abs(y_max) - abs(y_min)))*10
+
+    # X_part_width = math.ceil((x_max - x_min)/num_partitions)
+    # Y_part_width = math.ceil((y_max - y_min)/num_partitions)
     #initializing force array for the non zero force atoms of the membrane  
     part = int(max(num_partitions_x, num_partitions_y))
     z = np.zeros((part, part))   
