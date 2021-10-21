@@ -1,4 +1,6 @@
 # pyLFDA
+[![Pypi version](https://img.shields.io/pypi/v/nmslib.svg)](https://pypi.org/project/pyLFDA/)
+[![Downloads](https://pepy.tech/badge/pylfda)](https://pepy.tech/project/pylfda)
 
 pyLFDA is a tool which allows analysis of pairwise lipid force distribution along with other functions such as curvature and diffusion. Our tools enables easy usage of different versions of [Gromacs-FDA](https://github.com/HITS-MBM/gromacs-fda) as the user is only required to specify the version and pyLFDA handles the rest. We provide 3 modes of usage for all properties - 
   - Average - Averages the property for each atom over all input frames.
