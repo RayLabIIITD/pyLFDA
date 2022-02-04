@@ -91,7 +91,11 @@ optional arguments:
   -curve                Calculate Curvature
   -diffu                Calculate Diffusion
   -cluster              Generate Lipid Cluster Plots
+  -angle ANGLE [ANGLE ...]
+                        Calculate angle of selected lipids with the z-axis
+  -c_atom C_ATOM        Name of the atom to which the lipid vector is to be defined
   -split                Split Calculations into Upper and Lower Membranes
+  -combine              Combine lipids specifed for angle calculation
   -bfac bFactor         Calculate B-factor. "atomwise", "groupwise".
   -xbins Num_xBins      Number of bins in x-direction
   -ybins Num_yBins      Number of bins in y-direction
@@ -106,4 +110,4 @@ The GUI offers the same functionality with the ease of a graphical interface. To
 
 ### Python Package
 
-Detailed documentation and usage instructions for pyLFDA can be found in this [example](https://github.com/RayLabIIITD/pyLFDA/blob/main/pyLFDA/example.ipynb).
+Detailed documentation and usage instructions for pyLFDA can be found in [example-1](https://github.com/RayLabIIITD/pyLFDA/blob/main/example.ipynb), [example-2](https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_aa.ipynb), [example-3](https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_cg.ipynb).
