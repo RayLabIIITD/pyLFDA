@@ -110,4 +110,4 @@ The GUI offers the same functionality with the ease of a graphical interface. To
 
 ### Python Package
 
-Detailed documentation and usage instructions for pyLFDA can be found in [example-1](https://github.com/RayLabIIITD/pyLFDA/blob/main/example.ipynb), [example-2](https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_aa.ipynb), [example-3](https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_cg.ipynb).
+Detailed documentation and usage instructions for pyLFDA can be found in [example-1](https://github.com/RayLabIIITD/pyLFDA/blob/main/example.ipynb), [example-2](https://htmlpreview.github.io/?https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_aa.html), [example-3](https://htmlpreview.github.io/?https://github.com/RayLabIIITD/pyLFDA/blob/main/example_het_cg.html).
