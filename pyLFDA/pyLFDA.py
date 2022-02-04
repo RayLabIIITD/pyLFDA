@@ -1103,7 +1103,7 @@ def create_average_residue_graph(atom_dict, plot_name="average"):
         axs[i].set_xlabel("Z - Coordinate", fontsize=10)
         fig.supylabel("Force (N)", fontsize=10)
         fig.tight_layout()
-        fig.savefig(f"{plot_name}_{allKeys}.svg", dpi = 1000)
+        fig.savefig(f"{plot_name}_{'_'.join(allKeys)}.svg", dpi = 1000)
         plt.close()
 
         logger.info(f"Average Force plots created and saved")
